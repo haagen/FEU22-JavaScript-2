@@ -1,0 +1,6 @@
+<ng-container *ngIf="isLiked; else elseBlock">
+    <i class="bi bi-balloon-heart-fill" (click)="onClick(false)"></i>
+</ng-container>
+<ng-template #elseBlock>
+    <i class="bi bi-balloon-heart" (click)="onClick(true)"></i>
+</ng-template>

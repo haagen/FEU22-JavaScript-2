@@ -1,0 +1,8 @@
+<div class="card" style="width: 18rem;">
+    <img src="{{ theDog.url }}" class="card-img-top" alt="{{ theDog.name }}">
+    <div class="card-body">
+      <h5 class="card-title">{{ theDog.name }} <app-liked [isLiked]="theDog.liked"></app-liked></h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ theDog.breed }}</h6>
+      <p class="card-text">{{ theDog.description }}</p>
+    </div>
+</div>
