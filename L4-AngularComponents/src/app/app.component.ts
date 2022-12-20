@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'L4-AngularComponents';
+  appComponentClock: number = 25;
+
+  constructor() {
+    setTimeout(() => {
+      this.appComponentClock = 125;
+    }, 5000);
+  }
+
+  handleClockReset(oldClockTime: number) {
+    alert('The Clock was reset! (' + oldClockTime + ')');
+  }
+
 }

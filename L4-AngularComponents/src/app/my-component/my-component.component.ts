@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-my-component',
@@ -19,6 +19,9 @@ import { Component } from '@angular/core';
       </ul>
 
       <span class="green" *ngIf="isValid">The Component is valid!</span>
+
+      <span>Klockan är nu: {{ clock }}</span><br />
+      <button (click)="onBtnClick()">Nollställ klockan</button>
   `,
   styles: [`
       .red {
@@ -35,12 +38,18 @@ export class MyComponentComponent {
   isValid: boolean = false;
   title: string = 'My Beautiful Component';
   colors: string[] = ['Yellow', 'Brown', 'Red'];
+  @Input() clock: number = 0;
+  @Output() onClockReset = new EventEmitter<number>();  // void if no data to be emitted
 
   constructor() {
-    setTimeout(() => {
-      this.isValid = true;
-    }, 5000);
+    setInterval(() => {
+      this.clock++;
+    }, 1000);
   }
 
+  onBtnClick() {
+    this.onClockReset.emit(this.clock);
+    this.clock = 0;
+  }
 
 }
