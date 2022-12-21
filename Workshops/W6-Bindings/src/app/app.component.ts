@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
       [counter]="5" 
       (counterChanged)="onCounterChanged($event)">
     </app-bindings>
+    <hr />
+    <app-forms></app-forms>
   `,
   styles: [``]
 })

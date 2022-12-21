@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SearchResult } from '../SearchResult';
 
 
@@ -14,12 +14,12 @@ import { SearchResult } from '../SearchResult';
             <th>{{ searchResultColumns.column3 }}</th>
             <th></th>
           </tr>
-          <tr *ngFor="let result of searchResult">
+          <tr *ngFor="let result of searchResult; let i=index">
             <td>{{ result.column1 }}</td>
             <td>{{ result.column2 }}</td>
             <td>{{ result.column3 }}</td>
             <td>
-              <button class="btn btn-outline-secondary">More</button>
+              <button class="btn btn-outline-secondary" (click)="moreBtnClick(i)">More</button>
             </td>
           </tr>
         </table>
@@ -30,12 +30,12 @@ import { SearchResult } from '../SearchResult';
 })
 export class SearchResultComponent {
 
-  searchResult: SearchResult[] = [
-    { column1: 'Rad1C1', column2: 'Rad1C2', column3: 'Rad1C3' },
-    { column1: 'Rad2C1', column2: 'Rad2C2', column3: 'Rad3C3' },
-    { column1: 'Rad3C1', column2: 'Rad3C2', column3: 'Rad3C3' }
-  ];
+  @Input() searchResult: SearchResult[] = [];
+  @Input() searchResultColumns: SearchResult = { column1:'' };
+  @Output() selected = new EventEmitter<number>();
 
-  searchResultColumns: SearchResult = { column1: 'Heading 1', column2: 'Heading 2', column3: 'Heading 3'};
+  moreBtnClick(index: number) {
+    this.selected.emit(index);
+  }
 
 }
