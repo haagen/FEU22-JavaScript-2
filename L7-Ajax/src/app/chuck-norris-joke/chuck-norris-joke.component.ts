@@ -8,7 +8,8 @@ import { ChuckNorrisAPIResponse } from '../ChuckNorrisAPIResponse';
     <div class="parent">
       <div class="joke">{{ theJoke.value }}</div>
     </div>
-  `,
+  `,  
+  
   styles: [`
   
   .parent {
