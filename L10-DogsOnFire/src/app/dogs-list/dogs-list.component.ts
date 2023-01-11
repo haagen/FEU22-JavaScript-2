@@ -3,32 +3,38 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { Dog } from '../dog';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-dogs-list',
   template: `
     <h1>The Buring Dog List</h1>
-    <button class="btn btn-primary" (click)="addDog()">Add Dog</button>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Breed</th>
-          <th>Age</th>
-          <th>IQ</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let dog of dogs | async">
-          <td><a [routerLink]="['/edit', dog.id]">{{ dog.data.name }}</a></td>
-          <td>{{ dog.data.breed }}</td>
-          <td>{{ dog.data.age }}</td>
-          <td>{{ dog.data.iq }}</td>
-          <td><button type="button" class="btn btn-link" (click)="deleteDog(dog.id,dog.data.name)">Delete</button></td>
-        </tr>
-      </tbody>
-    </table>
+    <ng-container *ngIf="__loginService.getLoggedIn(); else login">
+      <button class="btn btn-primary" (click)="addDog()">Add Dog</button>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Breed</th>
+            <th>Age</th>
+            <th>IQ</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dog of dogs | async">
+            <td><a [routerLink]="['/edit', dog.id]">{{ dog.data.name }}</a></td>
+            <td>{{ dog.data.breed }}</td>
+            <td>{{ dog.data.age }}</td>
+            <td>{{ dog.data.iq }}</td>
+            <td><button type="button" class="btn btn-link" (click)="deleteDog(dog.id,dog.data.name)">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+    <ng-template #login>
+      This application requires you to login. Please <a routerLink="login">Login</a> or <a routerLink="signup">Signup</a> for an account to continue.
+    </ng-template>
   `,
   styles: [
   ]
@@ -38,7 +44,11 @@ export class DogsListComponent implements OnInit {
   doglist!: AngularFirestoreCollection<Dog>;    // A local pointer to the collection
   dogs: any;                                    // Observable
 
-  constructor(private __afs: AngularFirestore, private __router: Router) {} 
+  constructor(
+    private __afs: AngularFirestore, 
+    private __router: Router,
+    public __loginService: LoginService
+  ) {} 
 
   ngOnInit(): void {
     this.doglist = this.__afs.collection('dogs');
