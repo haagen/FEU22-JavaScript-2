@@ -18,7 +18,9 @@ export class AppComponent {
   state!: State;                // This attribute contains the state - it is used to determine how the component should render
   
   constructor(private _state: StateService) {
-      this.state = this._state.state;
+      this._state.getState().subscribe((newState) => {
+        this.state = newState;
+      });
    }
 
   onStartClick() {
