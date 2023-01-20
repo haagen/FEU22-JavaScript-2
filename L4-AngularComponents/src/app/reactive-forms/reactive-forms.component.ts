@@ -6,6 +6,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { CustomValidations } from '../customValidators';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-reactive-forms',
@@ -96,15 +97,25 @@ export class ReactiveFormsComponent implements OnInit {
   }
 
   ngOnInit() {
+    /*
     this.form.valueChanges.subscribe((newValues) => {
       console.log('New data in form: ', newValues);
     });
     this.form.controls.email.valueChanges.subscribe((newValue) => {
       console.log('New value email: ', newValue);
     });
-    this.form.statusChanges.subscribe((newStatus) => {
-      console.log('Form status changed: ', newStatus);
-    });
+    */
+    this.form.statusChanges
+      .pipe(distinctUntilChanged())
+      .subscribe((newStatus) => {
+        console.log('Form status changed: ', newStatus);
+      });
+
+    this.form.controls.name.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe((newValue) => {
+        console.log('New value name: ', newValue);
+      });
   }
 
   onSubmit() {
