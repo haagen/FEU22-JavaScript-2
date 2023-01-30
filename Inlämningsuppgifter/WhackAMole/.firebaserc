@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "whackamole-94b14": {
+      "hosting": {
+        "WhackAMole": [
+          "whackamole-94b14"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "whackamole-94b14"
+  }
+}
